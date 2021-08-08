@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from sklearn.decomposition import PCA
+import seaborn as sns
 
 ##
 # getting familiar with hyperspectral data
@@ -84,7 +85,8 @@ def get_pixels(X, y):
 
 df = get_pixels(X, y)
 
-
+print('\n')
+print("PCA", '\n')
 
 '''
 Dimensionality reduction using PCA,
@@ -107,7 +109,7 @@ pca = PCA(n_components=3)
 dt = pca.fit_transform(df.iloc[:, :-1].values)
 
 
-# print(dt[0])
+#print('dt 207399 ', dt[207399])
 
 # concatenate the data and the classes
 q = pd.concat([pd.DataFrame(data = dt), pd.DataFrame(data = y.ravel())], axis = 1)
@@ -115,19 +117,21 @@ q = pd.concat([pd.DataFrame(data = dt), pd.DataFrame(data = y.ravel())], axis = 
 # set column names
 q.columns = [f'PC - {i}' for i in range(1, 4)] + ['class']
 
-print(q.head(10))
+#print(q.head(), '\n')
+
 
 # save to vsv file
 q.to_csv('data_set_pca.csv', index=False)
 
 # remove class 0
 qq = q[q['class'] != 0]
- # check counts for classes
-print(qq['class'].value_counts())
+
+# check counts for classes
+print(qq['class'].value_counts(), '\n')
 
 
 # labels
-class_labels = {'1': 'Asphalt',
+labels = {'1': 'Asphalt',
 '2' :'Meadows',
 '3'	:'Gravel',
 '4'	:'Trees',
@@ -138,21 +142,61 @@ class_labels = {'1': 'Asphalt',
 '9'	:'Shadows'}
 
 # add class labels column
-qq['class_labels'] = qq['class'].apply(lambda x: class_labels[str(x)])
+qq['labels'] = qq['class'].apply(lambda x: labels[str(x)])
 
 # check counts for classes
-print(qq['class_labels'].value_counts())
+print(qq['labels'].value_counts(), '\n')
 
 # chck head
-print(qq.head())
+print(qq.head(), '\n')
 
 # visualisation of data
 
 #get counts
-counts = qq['class_labels'].value_counts()
+counts = qq['labels'].value_counts()
 
 
-# TBC..
+# # get counts for classes
+# class_counts = qq['class'].value_counts()
+
+#print(class_counts)
+
+# set the bar plot with labels
+plt.bar(range(len(counts)), counts, tick_label=counts.index)
+# set the title
+plt.title('Class Distribution')
+# show the plot
+plt.show()
+
+# bar plot unins sns
+# counts and labels
+sns.barplot(x=counts.index, y=counts, data=qq)
+# set title
+plt.title('Class Distribution')
+# show the plot
+plt.show()
+
+
+
+# set the 3D scatter plot
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+# set the title
+ax.set_title('3D Scatter Plot')
+# set the labels
+ax.set_xlabel('PC1')
+ax.set_ylabel('PC2')
+ax.set_zlabel('PC3')
+# set the colors
+ax.scatter(qq.iloc[:, 0], qq.iloc[:, 1], qq.iloc[:, 2], c=qq['class'])
+# show the plot
+plt.show()
+
+
+
+
+
+
 
 
 
