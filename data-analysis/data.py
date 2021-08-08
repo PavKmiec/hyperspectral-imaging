@@ -5,6 +5,10 @@ import numpy as np
 import pandas as pd
 from sklearn.decomposition import PCA
 import seaborn as sns
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
 ##
 # getting familiar with hyperspectral data
@@ -161,25 +165,16 @@ counts = qq['labels'].value_counts()
 
 #print(class_counts)
 
-# set the bar plot with labels
+# set the bar plot with class labels
 plt.bar(range(len(counts)), counts, tick_label=counts.index)
 # set the title
 plt.title('Class Distribution')
 # show the plot
 plt.show()
 
-# bar plot unins sns
-# counts and labels
-sns.barplot(x=counts.index, y=counts, data=qq)
-# set title
-plt.title('Class Distribution')
-# show the plot
-plt.show()
-
-
 
 # set the 3D scatter plot
-fig = plt.figure()
+fig = plt.figure(figsize=(15,8))
 ax = fig.add_subplot(111, projection='3d')
 # set the title
 ax.set_title('3D Scatter Plot')
@@ -191,6 +186,10 @@ ax.set_zlabel('PC3')
 ax.scatter(qq.iloc[:, 0], qq.iloc[:, 1], qq.iloc[:, 2], c=qq['class'])
 # show the plot
 plt.show()
+
+##### clasification using Deep Neural Network //TODO
+
+
 
 
 
