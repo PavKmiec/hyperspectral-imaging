@@ -18,3 +18,5 @@ Part 2: [Hyperspectral Cube – Getting familiar with data exploration](https://
 
 
 Part 3: [Data praparation, Dimension Reduction with PCA and Visial data exploration](https://learningstuffblog.home.blog/2021/08/07/part-3-analysing-data/)
+
+Part 4: [Multi-Class Classification - Hyperspectral Image](https://learningstuffblog.home.blog) - Coming soon
